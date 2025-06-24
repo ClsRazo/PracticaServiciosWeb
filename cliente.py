@@ -1,6 +1,6 @@
 import requests #Se instala con pip install requests
 
-base_url = "http://127.0.0.1:5000/libreria"
+base_url = "http://18.224.56.4:5000/libreria"
 
 def consultarPrecio():
     titulo = input("Ingrese el título del libro: ")

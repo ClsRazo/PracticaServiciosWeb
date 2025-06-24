@@ -91,5 +91,60 @@ def agregar_libro():
         "libro": {"titulo": titulo, "precio": precio}
     }), 201
 
+@app.route('/', methods=['GET'])
+def home():
+    """
+    Página de inicio del servicio
+    ---
+    responses:
+      200:
+        description: Información del servicio
+        schema:
+          type: object
+          properties:
+            servicio:
+              type: string
+            version:
+              type: string
+            endpoints:
+              type: array
+              items:
+                type: string
+    """
+    return jsonify({
+        "servicio": "API REST Librería",
+        "version": "1.0",
+        "swagger": "/apidocs/",
+        "endpoints": [
+            "GET /libreria/precio?titulo=<titulo>",
+            "POST /libreria/libro"
+        ],
+        "ejemplo": {
+            "consultar_precio": "/libreria/precio?titulo=Cryptography Theory and Practice",
+            "swagger_ui": "/apidocs/"
+        }
+    })
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    """
+    Health check del servicio
+    ---
+    responses:
+      200:
+        description: Estado del servicio
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+            libros_disponibles:
+              type: integer
+    """
+    return jsonify({
+        "status": "OK",
+        "libros_disponibles": len(libros)
+    })
+
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=False)
